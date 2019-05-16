@@ -1,9 +1,17 @@
 blunderbuss: {}
 cat: {}
 cherry_pick_unapproved: {}
-config_updater: {}
+config_updater:
+  maps:
+    env/prow/config.yaml:
+      name: config
+    env/prow/plugins.yaml:
+      name: plugins
 heart: {}
 owners: {}
+plugins:
+  cb-kubecd/environment-shriekviolet-dev:
+  - config-updater
 requiresig: {}
 sigmention: {}
 slack: {}
