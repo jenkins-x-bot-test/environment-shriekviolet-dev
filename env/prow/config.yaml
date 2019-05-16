@@ -3,7 +3,7 @@ branch-protection:
     cb-kubecd:
       repos:
         environment-shriekviolet-dev:
-          protect: true
+          protect: false
           required_status_checks:
             contexts:
             - integration
