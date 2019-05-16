@@ -21,7 +21,7 @@ postsubmits:
     branches:
     - master
     context: ""
-    name: releases
+    name: release
 presubmits:
   cb-kubecd/environment-shriekviolet-dev:
   - agent: tekton
