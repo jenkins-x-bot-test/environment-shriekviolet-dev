@@ -3,10 +3,10 @@ branch-protection:
     cb-kubecd:
       repos:
         environment-shriekviolet-dev:
-          protect: false
+          protect: true
           required_status_checks:
             contexts:
-            - integration
+            - promotion-build
   protect-tested-repos: true
 deck:
   spyglass: {}
@@ -21,13 +21,13 @@ postsubmits:
     branches:
     - master
     context: ""
-    name: release
+    name: promotion
 presubmits:
   cb-kubecd/environment-shriekviolet-dev:
   - agent: tekton
     always_run: true
-    context: integration
-    name: integration
+    context: promotion-build
+    name: promotion-build
     rerun_command: /test this
     trigger: (?m)^/test( all| this),?(\s+|$)
 push_gateway: {}
@@ -36,11 +36,9 @@ tide:
   context_options:
     from-branch-protection: true
     required-if-present-contexts: null
-    skip-unknown-contexts: true
+    skip-unknown-contexts: false
   queries:
-  - labels:
-    - approved
-    missingLabels:
+  - missingLabels:
     - do-not-merge
     - do-not-merge/hold
     - do-not-merge/work-in-progress
