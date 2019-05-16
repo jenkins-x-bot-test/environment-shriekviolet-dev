@@ -36,7 +36,7 @@ tide:
   context_options:
     from-branch-protection: true
     required-if-present-contexts: null
-    skip-unknown-contexts: false
+    skip-unknown-contexts: true
   queries:
   - labels:
     - approved
