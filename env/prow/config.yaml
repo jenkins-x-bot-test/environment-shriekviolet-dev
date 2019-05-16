@@ -26,8 +26,8 @@ presubmits:
   cb-kubecd/environment-shriekviolet-dev:
   - agent: tekton
     always_run: true
-    context: integration
-    name: integration
+    context: integrations
+    name: integrations
     rerun_command: /test this
     trigger: (?m)^/test( all| this),?(\s+|$)
 push_gateway: {}
