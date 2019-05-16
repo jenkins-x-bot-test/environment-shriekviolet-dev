@@ -1,4 +1,13 @@
-branch-protection: {}
+branch-protection:
+  orgs:
+    cb-kubecd:
+      repos:
+        environment-shriekviolet-dev:
+          protect: true
+          required_status_checks:
+            contexts:
+            - promotion-build
+  protect-tested-repos: true
 deck:
   spyglass: {}
 gerrit: {}
@@ -7,9 +16,35 @@ owners_dir_blacklist:
   repos: null
 plank: {}
 pod_namespace: jx
+postsubmits:
+  cb-kubecd/environment-shriekviolet-dev:
+  - agent: tekton
+    branches:
+    - master
+    context: ""
+    name: promotion
+presubmits:
+  cb-kubecd/environment-shriekviolet-dev:
+  - agent: tekton
+    always_run: true
+    context: promotion-build
+    name: promotion-build
+    rerun_command: /test this
+    trigger: (?m)^/test( all| this),?(\s+|$)
 prowjob_namespace: jx
 push_gateway: {}
 sinker: {}
 tide:
   context_options:
+    from-branch-protection: true
     required-if-present-contexts: null
+    skip-unknown-contexts: false
+  queries:
+  - missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-ok-to-test
+    - needs-rebase
+    repos:
+    - cb-kubecd/environment-shriekviolet-dev
