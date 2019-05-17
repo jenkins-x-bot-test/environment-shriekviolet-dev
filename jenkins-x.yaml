@@ -1,0 +1,7 @@
+buildPack: environment
+pipelineConfig:
+  pipelines:
+    release:
+      pipeline:
+        agent:
+          image: jenkinsxio/builder-go:0.0.0-SNAPSHOT-PR-4000-1
