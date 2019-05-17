@@ -1,0 +1,4 @@
+buildPack: environment
+agent:
+  label: jenkins-go
+  container: jenkinsxio/builder-go:0.0.0-SNAPSHOT-PR-4000-1
