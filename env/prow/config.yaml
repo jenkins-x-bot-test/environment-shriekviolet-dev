@@ -2,11 +2,16 @@ branch-protection:
   orgs:
     cb-kubecd:
       repos:
-        environment-shriekviolet-dev:
+        dconde-test-app:
           protect: true
           required_status_checks:
             contexts:
-            - promotion-build
+            - integration
+        dconde-test-app2:
+          protect: true
+          required_status_checks:
+            contexts:
+            - lint
   protect-tested-repos: true
 deck:
   spyglass: {}
@@ -17,18 +22,50 @@ owners_dir_blacklist:
 plank: {}
 pod_namespace: jx
 postsubmits:
-  cb-kubecd/environment-shriekviolet-dev:
+  cb-kubecd/dconde-test-app:
   - agent: tekton
     branches:
     - master
     context: ""
-    name: promotion
+    name: release
+  cb-kubecd/dconde-test-app2:
+  - agent: tekton
+    branches:
+    - master
+    context: ""
+    name: release
+  cb-kubecd/dconde-test-app3:
+  - agent: tekton
+    branches:
+    - master
+    context: ""
+    name: release
 presubmits:
-  cb-kubecd/environment-shriekviolet-dev:
+  cb-kubecd/dconde-test-app:
   - agent: tekton
     always_run: true
-    context: promotion-build
-    name: promotion-build
+    context: integration
+    name: integration
+    rerun_command: /test this
+    trigger: (?m)^/test( all| this),?(\s+|$)
+  cb-kubecd/dconde-test-app2:
+  - agent: tekton
+    always_run: true
+    context: integration
+    name: integration
+    rerun_command: /test this
+    trigger: (?m)^/test( all| this),?(\s+|$)
+  - agent: tekton
+    always_run: true
+    context: lint
+    name: lint
+    rerun_command: /test this
+    trigger: (?m)^/test( all| this),?(\s+|$)
+  cb-kubecd/dconde-test-app3:
+  - agent: tekton
+    always_run: true
+    context: bdd
+    name: bdd
     rerun_command: /test this
     trigger: (?m)^/test( all| this),?(\s+|$)
 prowjob_namespace: jx
@@ -40,11 +77,43 @@ tide:
     required-if-present-contexts: null
     skip-unknown-contexts: false
   queries:
-  - missingLabels:
+  - labels:
+    - approved
+    missingLabels:
     - do-not-merge
     - do-not-merge/hold
     - do-not-merge/work-in-progress
     - needs-ok-to-test
     - needs-rebase
     repos:
-    - cb-kubecd/environment-shriekviolet-dev
+    - cb-kubecd/dconde-test-app
+  - labels:
+    - approved
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-ok-to-test
+    - needs-rebase
+    repos:
+    - cb-kubecd/dconde-test-app2
+  - labels:
+    - approved
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-ok-to-test
+    - needs-rebase
+    repos:
+    - cb-kubecd/dconde-test-app2
+  - labels:
+    - approved
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-ok-to-test
+    - needs-rebase
+    repos:
+    - cb-kubecd/dconde-test-app3
