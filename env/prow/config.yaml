@@ -51,8 +51,8 @@ presubmits:
   cb-kubecd/dconde-test-app2:
   - agent: tekton
     always_run: true
-    context: integration
-    name: integration
+    context: integration-test
+    name: integration-test
     rerun_command: /test this
     trigger: (?m)^/test( all| this),?(\s+|$)
   - agent: tekton
