@@ -64,8 +64,8 @@ presubmits:
   cb-kubecd/dconde-test-app3:
   - agent: tekton
     always_run: true
-    context: bdd
-    name: bdd
+    context: bdd-integration
+    name: bdd-integration
     rerun_command: /test this
     trigger: (?m)^/test( all| this),?(\s+|$)
 prowjob_namespace: jx
